@@ -17,6 +17,12 @@ Resources:
       CodeUri: pets/
       Handler: handlers.handler
       Runtime: nodejs14.x
+  RecipesFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: recipes/
+      Handler: handlers.handler
+      Runtime: nodejs14.x
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
@@ -28,3 +34,9 @@ Outputs:
   PetsFunctionIamRole:
     Description: "Implicit IAM Role created for Pets function"
     Value: !GetAtt PetsFunctionRole.Arn
+  RecipesFunction:
+    Description: "Recipes Lambda Function ARN"
+    Value: !GetAtt RecipesFunction.Arn
+  RecipesFunctionIamRole:
+    Description: "Implicit IAM Role created for Recipes function"
+    Value: !GetAtt RecipesFunctionRole.Arn
