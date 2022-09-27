@@ -5,10 +5,6 @@ exports.handler = async (event, context) => {
     return generateResponse(400, "The event data is icorrect");
   }
 
-  if (!(await eventValidation(event, "myPets"))) {
-    return generateResponse(400, "MY PETS");
-  }
-
   if (
     !(
       (await eventValidation(event, "baseUrl")) &&
@@ -66,10 +62,6 @@ async function eventValidation(event, toValidate) {
         });
       }
       return validateUuid;
-    case "recipes":
-      return (
-        typeof Array.isArray(event[toValidate]) && event[toValidate].length
-      );
     default:
       break;
   }
