@@ -6,15 +6,11 @@ exports.handler = async (event, context) => {
   if (!(typeof Array.isArray(event["recipes"]) && event["recipes"].length)) {
     return generateResponse(400, "The event data is icorrect");
   }
-
-  console.log("PASE 1");
   const { recipes } = event;
 
   try {
     const csv = await generateCSV(recipes);
-    console.log("PASE 2");
     const base64File = await encodeToBase64(csv);
-    console.log("PASE 3");
     return generateResponse(200, base64File);
   } catch (err) {
     console.log(err);
@@ -52,13 +48,12 @@ async function generateCSV(data) {
     ),
   ].join("\r\n");
 
-  console.log(csv);
-
+  console.log({"csv" : csv})
   return csv;
 }
 
 async function encodeToBase64(file) {
-  let buff = new Buffer(file);
+  let buff = Buffer.from(file);
   let base64data = buff.toString("base64");
   return base64data;
 }
@@ -66,6 +61,6 @@ async function encodeToBase64(file) {
 async function generateResponse(statusCode, message) {
   return {
     statusCode: statusCode,
-    body: JSON.stringify(message),
+    body: message,
   };
 }
